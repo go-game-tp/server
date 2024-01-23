@@ -13,14 +13,17 @@ import java.io.Serializable;
 @Table(name = "user_game_invite")
 public class UserGameInviteEntity {
 
-    // TODO how do we specify both of these as the foreign key?
     @Id
-    @OneToOne
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_invite_id_seq")
+    @SequenceGenerator(name = "game_invite_id_seq", allocationSize = 1)
+    @Column(name = "game_invite_id", nullable = false, unique = true)
+    private Long gameInviteId;
+
+    @ManyToOne
     @PrimaryKeyJoinColumn(name = "user_sender_id")
     private UserEntity userSender;
 
-    @Id
-    @OneToOne
+    @ManyToOne
     @PrimaryKeyJoinColumn(name = "user_receiver_id")
     private UserEntity userReceiver;
 }

@@ -15,7 +15,12 @@ import lombok.NoArgsConstructor;
 public class UserLobbyEntity {
 
     @Id
-    @OneToOne
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_lobby_id_seq")
+    @SequenceGenerator(name = "user_lobby_id_seq", allocationSize = 1)
+    @Column(name = "user_lobby_id", nullable = false, unique = true)
+    private Long userLobbyId;
+
+    @ManyToOne
     @PrimaryKeyJoinColumn
     private UserEntity user;
 

@@ -17,6 +17,11 @@ import org.hibernate.validator.constraints.Range;
 public class UserStatsEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_stats_id_seq")
+    @SequenceGenerator(name = "user_stats_id_seq", allocationSize = 1)
+    @Column(name = "user_stats_id", nullable = false, unique = true)
+    private Long userStatsId;
+
     @OneToOne
     @PrimaryKeyJoinColumn
     private UserEntity user;

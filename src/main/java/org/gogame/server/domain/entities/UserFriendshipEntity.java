@@ -14,14 +14,17 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_friendship")
 public class UserFriendshipEntity {
 
-    // TODO how do we specify both of these as the foreign key?
     @Id
-    @OneToOne
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "friendship_id_seq")
+    @SequenceGenerator(name = "friendship_id_seq", allocationSize = 1)
+    @Column(name = "friendship_id", nullable = false, unique = true)
+    private Long friendshipId;
+
+    @ManyToOne
     @PrimaryKeyJoinColumn(name = "user_a_id")
     private UserEntity userA;
 
-    @Id
-    @OneToOne
+    @ManyToOne
     @PrimaryKeyJoinColumn(name = "user_b_id")
     private UserEntity userB;
 }
