@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "user_list")
+@Table(name = "user")
 public class UserEntity {
 
     @Id
@@ -18,7 +18,6 @@ public class UserEntity {
     @SequenceGenerator(name = "user_id_seq", allocationSize = 1)
     @Column(name = "user_id", nullable = false, unique = true)
     private Long userId;
-
 
     @Column(length = 64, nullable = false, unique = true)
     private String nickname;

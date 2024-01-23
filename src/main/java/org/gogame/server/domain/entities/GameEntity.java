@@ -12,21 +12,18 @@ import lombok.*;
 public class GameEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_id_seq")
-    @SequenceGenerator(name = "game_id_seq", allocationSize = 1)
+    // TODO figure out id generation for this
     @Column(name = "game_id", nullable = false, unique = true)
     private Long gameId;
 
+    @ManyToMany
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private UserEntity user;
 
-    @ManyToOne
-    @JoinColumn(name = "winner_id", referencedColumnName = "user_id")
-    private UserEntity winner;
+    @Column(name = "user_color", nullable = false)
+    private UserColor userColor;
 
-    @ManyToOne
-    @JoinColumn(name = "user_black_id", referencedColumnName = "user_id")
-    private UserEntity userBlack;
-
-    @ManyToOne
-    @JoinColumn(name = "user_white_id", referencedColumnName = "user_id")
-    private UserEntity userWhite;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "game_result", length = 5)
+    private GameResult result;
 }

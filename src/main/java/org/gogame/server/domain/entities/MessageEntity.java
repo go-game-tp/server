@@ -20,16 +20,13 @@ public class MessageEntity {
     @Column(name = "message_id", nullable = false, unique = true)
     private Long messageId;
 
-    @Column(name = "game_id")
-    private Long gameId;
+    @ManyToOne
+    @JoinColumn(name = "game_id", referencedColumnName = "game_id")
+    private GameEntity game;
 
     @ManyToOne
-    @JoinColumn(name = "user_rx_id", referencedColumnName = "user_id")
-    private UserEntity userRx;
-
-    @ManyToOne
-    @JoinColumn(name = "user_tx_id", referencedColumnName = "user_id")
-    private UserEntity userTx;
+    @JoinColumn(name = "author_id", referencedColumnName = "user_id")
+    private UserEntity author;
 
     @Column(nullable = false, length = 2048)
     private String text;
