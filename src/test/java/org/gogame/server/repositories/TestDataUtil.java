@@ -11,7 +11,7 @@ public class TestDataUtil {
         return UserEntity.builder()
                 .userId(1L)
                 .nickname("romka")
-                .passwordHashSha512("qwertyuiop")
+                .passwordHash("qwertyuiop")
                 .email("romka@romka.romka")
                 .joinDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 18, 33, 11)))
                 .build();
@@ -21,7 +21,7 @@ public class TestDataUtil {
         return UserEntity.builder()
                 .userId(2L)
                 .nickname("romka2")
-                .passwordHashSha512("qwertyuiop2")
+                .passwordHash("qwertyuiop2")
                 .email("romka2@romka.romka")
                 .joinDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 18, 33, 12)))
                 .build();
@@ -31,7 +31,7 @@ public class TestDataUtil {
         return UserEntity.builder()
                 .userId(3L)
                 .nickname("romka3")
-                .passwordHashSha512("qwertyuiop3")
+                .passwordHash("qwertyuiop3")
                 .email("romka3@romka.romka")
                 .joinDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 18, 33, 12)))
                 .build();
@@ -102,9 +102,9 @@ public class TestDataUtil {
         }
 
         return GameJournalEntity.builder()
-                .turn_id(1L)
+                .turnId(1L)
                 .game(gameEntity)
-                .actionType(GameAction.MOVE)
+                .action(GameAction.MOVE)
                 .turnX(1)
                 .turnY(2)
                 .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
@@ -120,7 +120,7 @@ public class TestDataUtil {
 
         return GameJournalEntity.builder()
                 .game(gameEntity)
-                .actionType(GameAction.STOP_REQ)
+                .action(GameAction.STOP_REQ)
                 .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
                 .build();
     }
@@ -134,7 +134,7 @@ public class TestDataUtil {
 
         return GameJournalEntity.builder()
                 .game(gameEntity)
-                .actionType(GameAction.LEAVE)
+                .action(GameAction.LEAVE)
                 .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
                 .build();
     }
