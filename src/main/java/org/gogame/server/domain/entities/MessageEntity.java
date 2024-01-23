@@ -20,12 +20,12 @@ public class MessageEntity {
     @Column(name = "message_id", nullable = false, unique = true)
     private Long messageId;
 
-    @ManyToOne
-    @JoinColumn(name = "game_id", referencedColumnName = "game_id")
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private GameEntity game;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id", referencedColumnName = "user_id")
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "author_id")
     private UserEntity author;
 
     @Column(nullable = false, length = 2048)

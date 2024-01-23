@@ -18,7 +18,7 @@ public class UserStatsEntity {
 
     @Id
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @PrimaryKeyJoinColumn
     private UserEntity user;
 
     @Range(min = 0)

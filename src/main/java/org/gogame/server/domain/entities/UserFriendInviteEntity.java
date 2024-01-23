@@ -15,11 +15,13 @@ import lombok.NoArgsConstructor;
 public class UserFriendInviteEntity {
 
     // TODO how do we specify both of these as the foreign key?
-    @ManyToOne
-    @JoinColumn(name = "user_sender_id", referencedColumnName = "user_id")
-    private UserEntity userSenderId;
+    @Id
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "user_sender_id")
+    private UserEntity userSender;
 
-    @ManyToOne
-    @JoinColumn(name = "user_receiver_id", referencedColumnName = "user_id")
-    private UserEntity userReceiverId;
+    @Id
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "user_receiver_id")
+    private UserEntity userReceiver;
 }

@@ -21,11 +21,11 @@ public class GameJournalEntity {
     private Long turnId;
 
     @OneToOne
-    @JoinColumn(name = "game_id", referencedColumnName = "game_id")
+    @PrimaryKeyJoinColumn
     private GameEntity game;
 
     @OneToOne
-    @JoinColumn(name = "author_id", referencedColumnName = "user_id")
+    @PrimaryKeyJoinColumn(name = "author_id")
     private UserEntity author;
 
     @Enumerated(EnumType.STRING)

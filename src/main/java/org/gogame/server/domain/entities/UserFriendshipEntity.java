@@ -15,11 +15,13 @@ import lombok.NoArgsConstructor;
 public class UserFriendshipEntity {
 
     // TODO how do we specify both of these as the foreign key?
-    @ManyToOne
-    @JoinColumn(name = "user_a_id", referencedColumnName = "user_id")
-    private UserEntity userAId;
+    @Id
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "user_a_id")
+    private UserEntity userA;
 
-    @ManyToOne
-    @JoinColumn(name = "user_b_id", referencedColumnName = "user_id")
-    private UserEntity userBId;
+    @Id
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "user_b_id")
+    private UserEntity userB;
 }

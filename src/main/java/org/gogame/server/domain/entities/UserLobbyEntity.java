@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 public class UserLobbyEntity {
 
     @Id
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private UserEntity userId;
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private UserEntity user;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_lobby_state", length = 10, nullable = false)

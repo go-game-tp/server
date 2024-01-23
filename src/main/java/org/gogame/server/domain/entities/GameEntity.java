@@ -28,15 +28,15 @@ public class GameEntity {
 
     @Id
     // TODO figure out id generation for this
-    @Column(name = "game_id", nullable = false, unique = true)
+    @Column(name = "game_id", nullable = false)
     private Long gameId;
 
     @Id
-    @ManyToMany
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @Column(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @Column(name = "user_color", nullable = false)
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "user_id")
     private UserColor userColor;
 
     @Enumerated(EnumType.STRING)
