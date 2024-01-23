@@ -38,7 +38,7 @@ public class MessageRepositoryIntegrationTests {
     public void testThatMessageCanBeCreatedAndRecalled() {
         MessageEntity messageEntityA = TestDataUtil.createTestMessageEntityA(gameRepo, userRepo);
         messageRepo.save(messageEntityA);
-        Optional<MessageEntity> result = messageRepo.findById(messageEntityA.getGameId());
+        Optional<MessageEntity> result = messageRepo.findById(messageEntityA.getGame().getGameId());
         assertThat(result).isPresent();
         assertThat(result).contains(messageEntityA);
     }
