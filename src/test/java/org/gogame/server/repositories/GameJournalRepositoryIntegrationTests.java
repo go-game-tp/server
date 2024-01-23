@@ -1,6 +1,6 @@
 package org.gogame.server.repositories;
 
-import org.gogame.server.domain.entities.GameActionType;
+import org.gogame.server.domain.entities.GameAction;
 import org.gogame.server.domain.entities.GameJournalEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,7 +61,7 @@ public class GameJournalRepositoryIntegrationTests {
     public void testThatGameJournalCanBeUpdated() {
         GameJournalEntity gameJournalEntityA = TestDataUtil.createTestGameJournalEntityA(gameRepo, userRepo);
         gameJournalRepo.save(gameJournalEntityA);
-        gameJournalEntityA.setActionType(GameActionType.STOP_REQ);
+        gameJournalEntityA.setActionType(GameAction.STOP_REQ);
         gameJournalRepo.save(gameJournalEntityA);
         Optional<GameJournalEntity> result = gameJournalRepo.findById(gameJournalEntityA.getTurn_id());
         assertThat(result).isPresent();

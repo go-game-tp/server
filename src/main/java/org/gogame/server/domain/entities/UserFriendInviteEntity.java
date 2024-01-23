@@ -17,7 +17,7 @@ public class UserFriendInviteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "friend_inv_id_seq")
     @SequenceGenerator(name = "friend_inv_id_seq", allocationSize = 1)
-    @Column(nullable = false, unique = true, name = "friend_invite_id")
+    @Column(name = "friend_invite_id", nullable = false, unique = true)
     private Long friendInviteId;
 
     @ManyToOne

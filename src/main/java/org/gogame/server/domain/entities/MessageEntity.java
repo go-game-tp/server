@@ -17,7 +17,7 @@ public class MessageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "turn_id_seq")
     @SequenceGenerator(name = "turn_id_seq", allocationSize = 1)
-    @Column(nullable = false, unique = true, name = "message_id")
+    @Column(name = "message_id", nullable = false, unique = true)
     private Long messageId;
 
     @Column(name = "game_id")

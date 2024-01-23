@@ -17,7 +17,7 @@ public class UserLobbyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_lobby_id_seq")
     @SequenceGenerator(name = "user_lobby_id_seq", allocationSize = 1)
-    @Column(nullable = false, unique = true, name = "user_lobby_id")
+    @Column(name = "user_lobby_id", nullable = false, unique = true)
     private Long userLobbyId;
 
     @ManyToOne
@@ -25,6 +25,6 @@ public class UserLobbyEntity {
     private UserEntity userId;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 10, nullable = false, name = "user_lobby_state")
+    @Column(name = "user_lobby_state", length = 10, nullable = false)
     private UserLobbyState userLobbyState;
 }

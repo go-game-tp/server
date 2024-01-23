@@ -104,7 +104,7 @@ public class TestDataUtil {
         return GameJournalEntity.builder()
                 .turn_id(1L)
                 .game(gameEntity)
-                .actionType(GameActionType.MOVE)
+                .actionType(GameAction.MOVE)
                 .turnX(1)
                 .turnY(2)
                 .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
@@ -120,7 +120,7 @@ public class TestDataUtil {
 
         return GameJournalEntity.builder()
                 .game(gameEntity)
-                .actionType(GameActionType.STOP_REQ)
+                .actionType(GameAction.STOP_REQ)
                 .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
                 .build();
     }
@@ -134,7 +134,7 @@ public class TestDataUtil {
 
         return GameJournalEntity.builder()
                 .game(gameEntity)
-                .actionType(GameActionType.LEAVE)
+                .actionType(GameAction.LEAVE)
                 .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
                 .build();
     }

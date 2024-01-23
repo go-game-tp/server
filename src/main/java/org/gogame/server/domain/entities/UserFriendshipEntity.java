@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "user_friend")
-public class UserFriendEntity {
+@Table(name = "user_friendship")
+public class UserFriendshipEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "friend_id_seq")
-    @SequenceGenerator(name = "friend_id_seq", allocationSize = 1)
-    @Column(nullable = false, unique = true, name = "friend_id")
-    private Long friendId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "friendship_id_seq")
+    @SequenceGenerator(name = "friendship_id_seq", allocationSize = 1)
+    @Column(name = "friendship_id", nullable = false, unique = true)
+    private Long friendshipId;
 
     @ManyToOne
     @JoinColumn(name = "user_a_id", referencedColumnName = "user_id")
