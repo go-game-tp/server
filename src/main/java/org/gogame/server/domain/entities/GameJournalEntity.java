@@ -24,6 +24,10 @@ public class GameJournalEntity {
     @JoinColumn(name = "game_id", referencedColumnName = "game_id")
     private GameEntity game;
 
+    @OneToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "user_id")
+    private UserEntity author;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "game_action", length = 9, nullable = false)
     private GameAction action;
