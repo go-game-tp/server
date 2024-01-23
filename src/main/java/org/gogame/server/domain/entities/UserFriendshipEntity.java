@@ -14,12 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_friendship")
 public class UserFriendshipEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "friendship_id_seq")
-    @SequenceGenerator(name = "friendship_id_seq", allocationSize = 1)
-    @Column(name = "friendship_id", nullable = false, unique = true)
-    private Long friendshipId;
-
+    // TODO how do we specify both of these as the foreign key?
     @ManyToOne
     @JoinColumn(name = "user_a_id", referencedColumnName = "user_id")
     private UserEntity userAId;

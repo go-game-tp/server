@@ -14,12 +14,9 @@ import org.hibernate.validator.constraints.Range;
 public class LeaderboardEntity {
 
     @Id
-    @Column(name = "user_pos", nullable = false, unique = true)
-    private Long userPos;
-
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private UserEntity userId;
+    private UserEntity user;
 
     @Range(min = 0)
     @ColumnDefault("0")
