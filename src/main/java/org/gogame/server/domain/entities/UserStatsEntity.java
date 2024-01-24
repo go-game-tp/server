@@ -21,7 +21,7 @@ public class UserStatsEntity {
     @Column(name = "user_stats_id", nullable = false, unique = true)
     private Long userStatsId;
 
-    @OneToOne
+    @ManyToOne
     @PrimaryKeyJoinColumn
     private UserEntity user;
 

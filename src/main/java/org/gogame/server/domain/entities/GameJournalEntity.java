@@ -22,7 +22,7 @@ public class GameJournalEntity {
     @Column(name = "game_id", nullable = false, unique = true)
     private Long gameId;
 
-    @OneToOne
+    @ManyToOne
     @PrimaryKeyJoinColumn(name = "author_id")
     private UserEntity author;
 
