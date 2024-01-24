@@ -16,6 +16,7 @@ public class ResultScoreEntity {
     @Column(name = "result_score_id", nullable = false, unique = true)
     private Long resultScoreId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "game_result", length = 5, nullable = false, unique = true)
     private GameResult result;
 

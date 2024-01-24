@@ -17,7 +17,7 @@ public class LeaderboardEntity {
     @Column(name = "user_pos", nullable = false, unique = true)
     private Long userPos;
 
-    @OneToOne
+    @ManyToOne
     @PrimaryKeyJoinColumn
     private UserEntity user;
 
