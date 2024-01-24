@@ -54,13 +54,13 @@ public class TestDataUtil {
         return Pair.of(
                 GameEntity.builder()
                         .gameId(gameId)
-                        .user(userA)
+                        .userId(userA.getUserId())
                         .userColor(UserColor.BLACK)
                         .result(GameResult.WIN)
                         .build(),
                 GameEntity.builder()
                         .gameId(gameId)
-                        .user(userB)
+                        .userId(userB.getUserId())
                         .userColor(UserColor.WHITE)
                         .result(GameResult.LOSS)
                         .build()
@@ -83,13 +83,13 @@ public class TestDataUtil {
         return Pair.of(
                 GameEntity.builder()
                         .gameId(gameId)
-                        .user(userA)
+                        .userId(userA.getUserId())
                         .userColor(UserColor.BLACK)
                         .result(GameResult.LOSS)
                         .build(),
                 GameEntity.builder()
                         .gameId(gameId)
-                        .user(userB)
+                        .userId(userB.getUserId())
                         .userColor(UserColor.WHITE)
                         .result(GameResult.WIN)
                         .build()
@@ -112,13 +112,13 @@ public class TestDataUtil {
         return Pair.of(
                 GameEntity.builder()
                         .gameId(gameId)
-                        .user(userC)
+                        .userId(userC.getUserId())
                         .userColor(UserColor.BLACK)
                         .result(GameResult.WIN)
                         .build(),
                 GameEntity.builder()
                         .gameId(gameId)
-                        .user(userB)
+                        .userId(userB.getUserId())
                         .userColor(UserColor.WHITE)
                         .result(GameResult.LOSS)
                         .build()
@@ -135,7 +135,7 @@ public class TestDataUtil {
 
         return GameJournalEntity.builder()
                 .turnId(1L)
-                .game(gameEntity.getFirst())
+                .gameId(gameEntity.getFirst().getGameId())
                 .action(GameAction.MOVE)
                 .turnX(1)
                 .turnY(2)
@@ -152,7 +152,7 @@ public class TestDataUtil {
         }
 
         return GameJournalEntity.builder()
-                .game(gameEntity.getFirst())
+                .gameId(gameEntity.getFirst().getGameId())
                 .action(GameAction.STOP_REQ)
                 .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
                 .build();
@@ -167,7 +167,7 @@ public class TestDataUtil {
         }
 
         return GameJournalEntity.builder()
-                .game(gameEntity.getFirst())
+                .gameId(gameEntity.getFirst().getGameId())
                 .action(GameAction.LEAVE)
                 .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
                 .build();
@@ -182,6 +182,7 @@ public class TestDataUtil {
         }
 
         return LeaderboardEntity.builder()
+                .userPos(1L)
                 .user(userA)
                 .score(666L)
                 .build();
@@ -196,6 +197,7 @@ public class TestDataUtil {
         }
 
         return LeaderboardEntity.builder()
+                .userPos(2L)
                 .user(userB)
                 .score(145L)
                 .build();
@@ -210,6 +212,7 @@ public class TestDataUtil {
         }
 
         return LeaderboardEntity.builder()
+                .userPos(3L)
                 .user(userC)
                 .score(110L)
                 .build();
@@ -225,12 +228,20 @@ public class TestDataUtil {
             gameRepo.save(gameEntityA.getSecond());
         }
 
-        var userBlack = gameEntityA.getFirst().getUserColor() == UserColor.BLACK ?
-                gameEntityA.getFirst().getUser() : gameEntityA.getSecond().getUser();
+        var userBlackId = gameEntityA.getFirst().getUserColor() == UserColor.BLACK ?
+                gameEntityA.getFirst().getUserId() : gameEntityA.getSecond().getUserId();
+
+        var userBlackOpt = userRepo.findById(userBlackId);
+
+        if (userBlackOpt.isEmpty()) {
+            return null;
+        }
+
+        var userBlack = userBlackOpt.get();
 
         return MessageEntity.builder()
                 .messageId(1L)
-                .game(gameEntityA.getFirst())
+                .gameId(gameEntityA.getFirst().getGameId())
                 .author(userBlack)
                 .text("tests are boring")
                 .build();
@@ -246,12 +257,20 @@ public class TestDataUtil {
             gameRepo.save(gameEntityB.getSecond());
         }
 
-        var userBlack = gameEntityB.getFirst().getUserColor() == UserColor.BLACK ?
-                gameEntityB.getFirst().getUser() : gameEntityB.getSecond().getUser();
+        var userBlackId = gameEntityB.getFirst().getUserColor() == UserColor.BLACK ?
+                gameEntityB.getFirst().getUserId() : gameEntityB.getSecond().getUserId();
+
+        var userBlackOpt = userRepo.findById(userBlackId);
+
+        if (userBlackOpt.isEmpty()) {
+            return null;
+        }
+
+        var userBlack = userBlackOpt.get();
 
         return MessageEntity.builder()
                 .messageId(2L)
-                .game(gameEntityB.getFirst())
+                .gameId(gameEntityB.getFirst().getGameId())
                 .author(userBlack)
                 .text("very boring")
                 .build();
@@ -267,12 +286,20 @@ public class TestDataUtil {
             gameRepo.save(gameEntityC.getSecond());
         }
 
-        var userBlack = gameEntityC.getFirst().getUserColor() == UserColor.BLACK ?
-                gameEntityC.getFirst().getUser() : gameEntityC.getSecond().getUser();
+        var userBlackId = gameEntityC.getFirst().getUserColor() == UserColor.BLACK ?
+                gameEntityC.getFirst().getUserId() : gameEntityC.getSecond().getUserId();
+
+        var userBlackOpt = userRepo.findById(userBlackId);
+
+        if (userBlackOpt.isEmpty()) {
+            return null;
+        }
+
+        var userBlack = userBlackOpt.get();
 
         return MessageEntity.builder()
                 .messageId(3L)
-                .game(gameEntityC.getFirst())
+                .gameId(gameEntityC.getFirst().getGameId())
                 .author(userBlack)
                 .text("very very boring")
                 .build();
