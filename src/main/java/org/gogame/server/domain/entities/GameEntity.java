@@ -19,11 +19,11 @@ public class GameEntity {
     @NoArgsConstructor
     public static class GameEntityId implements Serializable {
         private Long gameId;
-        private UserEntity user;
+        private Long userId;
     }
 
     public GameEntityId getId() {
-        return new GameEntityId(this.getGameId(), this.getUser());
+        return new GameEntityId(this.getGameId(), this.getUserId());
     }
 
     @Id
@@ -33,10 +33,10 @@ public class GameEntity {
 
     @Id
     @Column(name = "user_id", nullable = false)
-    private UserEntity user;
+    private Long userId;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn(name = "user_id")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_color", nullable = false)
     private UserColor userColor;
 
     @Enumerated(EnumType.STRING)
