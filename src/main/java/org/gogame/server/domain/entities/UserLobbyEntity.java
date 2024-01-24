@@ -20,7 +20,7 @@ public class UserLobbyEntity {
     private Long userLobbyId;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn
+    @PrimaryKeyJoinColumn(name = "user_id")
     private UserEntity user;
 
     @Enumerated(EnumType.STRING)

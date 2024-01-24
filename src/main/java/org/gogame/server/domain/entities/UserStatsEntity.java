@@ -22,7 +22,7 @@ public class UserStatsEntity {
     private Long userStatsId;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn
+    @PrimaryKeyJoinColumn(name = "user_id")
     private UserEntity user;
 
     @Range(min = 0)
