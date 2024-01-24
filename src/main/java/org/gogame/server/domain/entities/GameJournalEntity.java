@@ -19,9 +19,8 @@ public class GameJournalEntity {
     @Column(name = "turn_id", nullable = false, unique = true)
     private Long turnId;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private GameEntity game;
+    @Column(name = "game_id", nullable = false, unique = true)
+    private Long gameId;
 
     @OneToOne
     @PrimaryKeyJoinColumn(name = "author_id")

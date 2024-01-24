@@ -19,9 +19,8 @@ public class MessageEntity {
     @Column(name = "message_id", nullable = false, unique = true)
     private Long messageId;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private GameEntity game;
+    @Column(name = "game_id", nullable = false, unique = true)
+    private Long gameId;
 
     @OneToOne
     @PrimaryKeyJoinColumn(name = "author_id")
