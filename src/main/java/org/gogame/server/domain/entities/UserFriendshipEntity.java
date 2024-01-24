@@ -15,8 +15,7 @@ import lombok.NoArgsConstructor;
 public class UserFriendshipEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "friendship_id_seq")
-    @SequenceGenerator(name = "friendship_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "friendship_id", nullable = false, unique = true)
     private Long friendshipId;
 

@@ -14,8 +14,7 @@ import java.io.Serializable;
 public class UserGameInviteEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_invite_id_seq")
-    @SequenceGenerator(name = "game_invite_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "game_invite_id", nullable = false, unique = true)
     private Long gameInviteId;
 

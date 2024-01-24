@@ -12,8 +12,7 @@ import lombok.*;
 public class ResultScoreEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "result_score_id_seq")
-    @SequenceGenerator(name = "result_score_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "result_score_id", nullable = false, unique = true)
     private Long resultScoreId;
 

@@ -15,8 +15,7 @@ import lombok.NoArgsConstructor;
 public class UserFriendInviteEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "friend_invite_id_seq")
-    @SequenceGenerator(name = "friend_invite_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "friend_invite_id", nullable = false, unique = true)
     private Long friendInviteId;
 

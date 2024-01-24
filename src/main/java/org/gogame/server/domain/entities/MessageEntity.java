@@ -15,8 +15,7 @@ import lombok.NoArgsConstructor;
 public class MessageEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "turn_id_seq")
-    @SequenceGenerator(name = "turn_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "message_id", nullable = false, unique = true)
     private Long messageId;
 

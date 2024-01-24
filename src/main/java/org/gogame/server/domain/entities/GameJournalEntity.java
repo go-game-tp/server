@@ -15,8 +15,7 @@ import java.sql.Timestamp;
 public class GameJournalEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "turn_id_seq")
-    @SequenceGenerator(name = "turn_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "turn_id", nullable = false, unique = true)
     private Long turnId;
 

@@ -15,8 +15,7 @@ import lombok.NoArgsConstructor;
 public class UserLobbyEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_lobby_id_seq")
-    @SequenceGenerator(name = "user_lobby_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "user_lobby_id", nullable = false, unique = true)
     private Long userLobbyId;
 
