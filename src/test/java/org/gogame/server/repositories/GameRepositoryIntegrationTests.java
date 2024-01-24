@@ -34,7 +34,7 @@ public class GameRepositoryIntegrationTests {
 
     @Test
     public void testThatGameCanBeCreatedAndRecalled() {
-        Pair<GameEntity, GameEntity> gameEntityA = TestDataUtil.createTestGameEntityA(userRepo);
+        Pair<GameEntity, GameEntity> gameEntityA = TestData.GameEntityUtils.createA(userRepo);
         gameRepo.save(gameEntityA.getFirst());
         gameRepo.save(gameEntityA.getSecond());
 
@@ -53,15 +53,15 @@ public class GameRepositoryIntegrationTests {
 
     @Test
     public void testThatMultipleGamesCanBeCreatedAndRecalled() {
-        Pair<GameEntity, GameEntity> gameEntityA = TestDataUtil.createTestGameEntityA(userRepo);
+        Pair<GameEntity, GameEntity> gameEntityA = TestData.GameEntityUtils.createA(userRepo);
         gameRepo.save(gameEntityA.getFirst());
         gameRepo.save(gameEntityA.getSecond());
 
-        Pair<GameEntity, GameEntity> gameEntityB = TestDataUtil.createTestGameEntityB(userRepo);
+        Pair<GameEntity, GameEntity> gameEntityB = TestData.GameEntityUtils.createB(userRepo);
         gameRepo.save(gameEntityB.getFirst());
         gameRepo.save(gameEntityB.getSecond());
 
-        Pair<GameEntity, GameEntity> gameEntityC = TestDataUtil.createTestGameEntityC(userRepo);
+        Pair<GameEntity, GameEntity> gameEntityC = TestData.GameEntityUtils.createC(userRepo);
         gameRepo.save(gameEntityC.getFirst());
         gameRepo.save(gameEntityC.getSecond());
 
@@ -77,7 +77,7 @@ public class GameRepositoryIntegrationTests {
 
     @Test
     public void testThatGameCanBeUpdated() {
-        Pair<GameEntity, GameEntity> gameEntityA = TestDataUtil.createTestGameEntityA(userRepo);
+        Pair<GameEntity, GameEntity> gameEntityA = TestData.GameEntityUtils.createA(userRepo);
         gameRepo.save(gameEntityA.getFirst());
         gameRepo.save(gameEntityA.getSecond());
 
@@ -105,7 +105,7 @@ public class GameRepositoryIntegrationTests {
 
     @Test
     public void testThatGameCanBeDeleted() {
-        Pair<GameEntity, GameEntity> gameEntityA = TestDataUtil.createTestGameEntityA(userRepo);
+        Pair<GameEntity, GameEntity> gameEntityA = TestData.GameEntityUtils.createA(userRepo);
 
         gameRepo.save(gameEntityA.getFirst());
         gameRepo.save(gameEntityA.getSecond());

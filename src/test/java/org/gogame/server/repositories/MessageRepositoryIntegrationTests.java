@@ -36,7 +36,7 @@ public class MessageRepositoryIntegrationTests {
 
     @Test
     public void testThatMessageCanBeCreatedAndRecalled() {
-        MessageEntity messageEntityA = TestDataUtil.createTestMessageEntityA(gameRepo, userRepo);
+        MessageEntity messageEntityA = TestData.MessageUtils.createA(gameRepo, userRepo);
         messageRepo.save(messageEntityA);
         Optional<MessageEntity> result = messageRepo.findById(messageEntityA.getGameId());
         assertThat(result).isPresent();
@@ -45,11 +45,11 @@ public class MessageRepositoryIntegrationTests {
 
     @Test
     public void testThatMultipleMessagesCanBeCreatedAndRecalled() {
-        MessageEntity messageEntityA = TestDataUtil.createTestMessageEntityA(gameRepo, userRepo);
+        MessageEntity messageEntityA = TestData.MessageUtils.createA(gameRepo, userRepo);
         messageRepo.save(messageEntityA);
-        MessageEntity messageEntityB = TestDataUtil.createTestMessageEntityB(gameRepo, userRepo);
+        MessageEntity messageEntityB = TestData.MessageUtils.createB(gameRepo, userRepo);
         messageRepo.save(messageEntityB);
-        MessageEntity messageEntityC = TestDataUtil.createTestMessageEntityC(gameRepo, userRepo);
+        MessageEntity messageEntityC = TestData.MessageUtils.createC(gameRepo, userRepo);
         messageRepo.save(messageEntityC);
 
         Iterable<MessageEntity> result = messageRepo.findAll();

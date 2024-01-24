@@ -32,7 +32,7 @@ public class LeaderboardRepositoryIntegrationTests {
 
     @Test
     public void testThatLeaderboardCanBeCreatedAndRecalled() {
-        LeaderboardEntity leaderboardEntityA = TestDataUtil.createTestLeaderboardEntityA(userRepo);
+        LeaderboardEntity leaderboardEntityA = TestData.LeaderboardUtils.createA(userRepo);
         leaderboardRepo.save(leaderboardEntityA);
         Optional<LeaderboardEntity> result = leaderboardRepo.findById(leaderboardEntityA.getUser().getUserId());
         assertThat(result).isPresent();
@@ -41,11 +41,11 @@ public class LeaderboardRepositoryIntegrationTests {
 
     @Test
     public void testThatMultipleLeaderboardsCanBeCreatedAndRecalled() {
-        LeaderboardEntity leaderboardEntityA = TestDataUtil.createTestLeaderboardEntityA(userRepo);
+        LeaderboardEntity leaderboardEntityA = TestData.LeaderboardUtils.createA(userRepo);
         leaderboardRepo.save(leaderboardEntityA);
-        LeaderboardEntity leaderboardEntityB = TestDataUtil.createTestLeaderboardEntityB(userRepo);
+        LeaderboardEntity leaderboardEntityB = TestData.LeaderboardUtils.createB(userRepo);
         leaderboardRepo.save(leaderboardEntityB);
-        LeaderboardEntity leaderboardEntityC = TestDataUtil.createTestLeaderboardEntityC(userRepo);
+        LeaderboardEntity leaderboardEntityC = TestData.LeaderboardUtils.createC(userRepo);
         leaderboardRepo.save(leaderboardEntityC);
 
         Iterable<LeaderboardEntity> result = leaderboardRepo.findAll();
@@ -55,7 +55,7 @@ public class LeaderboardRepositoryIntegrationTests {
 
     @Test
     public void testThatLeaderboardCanBeUpdated() {
-        LeaderboardEntity leaderboardEntityA = TestDataUtil.createTestLeaderboardEntityA(userRepo);
+        LeaderboardEntity leaderboardEntityA = TestData.LeaderboardUtils.createA(userRepo);
         leaderboardRepo.save(leaderboardEntityA);
         leaderboardEntityA.setScore(16L);
         leaderboardRepo.save(leaderboardEntityA);
@@ -66,7 +66,7 @@ public class LeaderboardRepositoryIntegrationTests {
 
     @Test
     public void testThatLeaderboardCanBeDeleted() {
-        LeaderboardEntity leaderboardEntityA = TestDataUtil.createTestLeaderboardEntityA(userRepo);
+        LeaderboardEntity leaderboardEntityA = TestData.LeaderboardUtils.createA(userRepo);
         leaderboardRepo.save(leaderboardEntityA);
         leaderboardRepo.deleteById(leaderboardEntityA.getUser().getUserId());
         Optional<LeaderboardEntity> result = leaderboardRepo.findById(leaderboardEntityA.getUser().getUserId());
