@@ -45,7 +45,7 @@ public class GameRepositoryIntegrationTests {
         assertThat(resultFirst).contains(gameEntityA.getFirst());
 
         assertThat(resultSecond).isPresent();
-        assertThat(resultSecond).contains(gameEntityA.getFirst());
+        assertThat(resultSecond).contains(gameEntityA.getSecond());
 
         assertThat(resultFirst.get().getGameId())
                 .isEqualTo(resultSecond.get().getGameId());
