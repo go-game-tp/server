@@ -163,7 +163,7 @@ public class TestData {
             }
 
             return LeaderboardEntity.builder()
-                    .user(userA)
+                    .userId(userA.getUserId())
                     .score(666L)
                     .build();
         }
@@ -177,7 +177,7 @@ public class TestData {
             }
 
             return LeaderboardEntity.builder()
-                    .user(userB)
+                    .userId(userB.getUserId())
                     .score(145L)
                     .build();
         }
@@ -191,7 +191,7 @@ public class TestData {
             }
 
             return LeaderboardEntity.builder()
-                    .user(userC)
+                    .userId(userC.getUserId())
                     .score(110L)
                     .build();
         }
@@ -208,7 +208,7 @@ public class TestData {
             return MessageEntity.builder()
                     .game(gameEntity)
                     .author(gameEntity.getUserWhite())
-                    .text("tests are boring")
+                    .content("tests are boring")
                     .build();
         }
 
@@ -221,7 +221,7 @@ public class TestData {
             return MessageEntity.builder()
                     .game(gameEntity)
                     .author(gameEntity.getUserWhite())
-                    .text("very boring")
+                    .content("very boring")
                     .build();
         }
 
@@ -234,7 +234,7 @@ public class TestData {
             return MessageEntity.builder()
                     .game(gameEntity)
                     .author(gameEntity.getUserWhite())
-                    .text("very very boring")
+                    .content("very very boring")
                     .build();
         }
     }
