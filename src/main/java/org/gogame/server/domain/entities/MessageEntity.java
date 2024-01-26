@@ -19,11 +19,12 @@ public class MessageEntity {
     @Column(name = "message_id", nullable = false, unique = true)
     private Long messageId;
 
-    @Column(name = "game_id", nullable = false, unique = true)
-    private Long gameId;
+    @ManyToOne
+    @PrimaryKeyJoinColumn
+    private GameEntity game;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "author_id")
+    @PrimaryKeyJoinColumn
     private UserEntity author;
 
     @Column(nullable = false, length = 2048)

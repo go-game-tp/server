@@ -1,7 +1,6 @@
 package org.gogame.server.repositories;
 
 import org.gogame.server.domain.entities.*;
-import org.springframework.data.util.Pair;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -42,91 +41,67 @@ public class TestData {
 
     static class GameEntityUtils {
 
-        public static Pair<GameEntity, GameEntity> createA(final UserRepository userRepo) {
-            var userA = UserEntityUtils.createA();
+        public static GameEntity createA(final UserRepository userRepo) {
+            var userW = UserEntityUtils.createA();
             var userB = UserEntityUtils.createB();
 
-            if (userRepo.findById(userA.getUserId()).isEmpty()) {
-                userRepo.save(userA);
+            if (userRepo.findByNickname(userW.getNickname()).isEmpty()) {
+                userRepo.save(userW);
             }
-            if (userRepo.findById(userB.getUserId()).isEmpty()) {
+            if (userRepo.findByNickname(userB.getNickname()).isEmpty()) {
                 userRepo.save(userB);
             }
 
             var gameId = 1L;
 
-            return Pair.of(
-                    GameEntity.builder()
-                            .gameId(gameId)
-                            .userId(userA.getUserId())
-                            .userColor(UserColor.BLACK)
-                            .result(GameResult.WIN)
-                            .build(),
-                    GameEntity.builder()
-                            .gameId(gameId)
-                            .userId(userB.getUserId())
-                            .userColor(UserColor.WHITE)
-                            .result(GameResult.LOSS)
-                            .build()
-            );
+            return GameEntity.builder()
+                    .gameId(gameId)
+                    .userWhite(userW)
+                    .userBlack(userB)
+                    .winner(userW)
+                    .build();
         }
 
-        public static Pair<GameEntity, GameEntity> createB(final UserRepository userRepo) {
-            var userA = UserEntityUtils.createA();
+        public static GameEntity createB(final UserRepository userRepo) {
+            var userW = UserEntityUtils.createA();
             var userB = UserEntityUtils.createB();
 
-            if (userRepo.findById(userA.getUserId()).isEmpty()) {
-                userRepo.save(userA);
+            if (userRepo.findByNickname(userW.getNickname()).isEmpty()) {
+                userRepo.save(userW);
             }
-            if (userRepo.findById(userB.getUserId()).isEmpty()) {
+            if (userRepo.findByNickname(userB.getNickname()).isEmpty()) {
                 userRepo.save(userB);
             }
 
             var gameId = 2L;
 
-            return Pair.of(
-                    GameEntity.builder()
-                            .gameId(gameId)
-                            .userId(userA.getUserId())
-                            .userColor(UserColor.BLACK)
-                            .result(GameResult.LOSS)
-                            .build(),
-                    GameEntity.builder()
-                            .gameId(gameId)
-                            .userId(userB.getUserId())
-                            .userColor(UserColor.WHITE)
-                            .result(GameResult.WIN)
-                            .build()
-            );
+            return GameEntity.builder()
+                    .gameId(gameId)
+                    .userWhite(userW)
+                    .userBlack(userB)
+                    .winner(userW)
+                    .build();
         }
 
-        public static Pair<GameEntity, GameEntity> createC(final UserRepository userRepo) {
-            var userB = UserEntityUtils.createB();
-            var userC = UserEntityUtils.createC();
+        public static GameEntity createC(final UserRepository userRepo) {
+            var userW = UserEntityUtils.createB();
+            var userB = UserEntityUtils.createC();
 
-            if (userRepo.findById(userB.getUserId()).isEmpty()) {
-                userRepo.save(userB);
+            if (userRepo.findByNickname(userW.getNickname()).isEmpty()) {
+                userRepo.save(userW);
             }
-            if (userRepo.findById(userC.getUserId()).isEmpty()) {
-                userRepo.save(userC);
+            if (userRepo.findByNickname(userB.getNickname()).isEmpty()) {
+                userRepo.save(userB);
             }
 
             var gameId = 3L;
 
-            return Pair.of(
-                    GameEntity.builder()
-                            .gameId(gameId)
-                            .userId(userC.getUserId())
-                            .userColor(UserColor.BLACK)
-                            .result(GameResult.WIN)
-                            .build(),
-                    GameEntity.builder()
-                            .gameId(gameId)
-                            .userId(userB.getUserId())
-                            .userColor(UserColor.WHITE)
-                            .result(GameResult.LOSS)
-                            .build()
-            );
+            return GameEntity.builder()
+                    .gameId(gameId)
+                    .userWhite(userW)
+                    .userBlack(userB)
+                    .winner(userB)
+                    .build();
         }
     }
 
@@ -135,14 +110,13 @@ public class TestData {
         public static GameJournalEntity createA(final GameRepository gameRepo,
                                                 final UserRepository userRepo) {
             var gameEntity = GameEntityUtils.createA(userRepo);
-            if (gameRepo.findById(gameEntity.getFirst().getId()).isEmpty()) {
-                gameRepo.save(gameEntity.getFirst());
-                gameRepo.save(gameEntity.getSecond());
+            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
+                gameRepo.save(gameEntity);
             }
 
             return GameJournalEntity.builder()
                     .turnId(1L)
-                    .gameId(gameEntity.getFirst().getGameId())
+                    .game(gameEntity)
                     .action(GameAction.MOVE)
                     .turnX(1)
                     .turnY(2)
@@ -153,13 +127,12 @@ public class TestData {
         public static GameJournalEntity createB(final GameRepository gameRepo,
                                                 final UserRepository userRepo) {
             var gameEntity = GameEntityUtils.createB(userRepo);
-            if (gameRepo.findById(gameEntity.getFirst().getId()).isEmpty()) {
-                gameRepo.save(gameEntity.getFirst());
-                gameRepo.save(gameEntity.getSecond());
+            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
+                gameRepo.save(gameEntity);
             }
 
             return GameJournalEntity.builder()
-                    .gameId(gameEntity.getFirst().getGameId())
+                    .game(gameEntity)
                     .action(GameAction.STOP_REQ)
                     .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
                     .build();
@@ -168,13 +141,12 @@ public class TestData {
         public static GameJournalEntity createC(final GameRepository gameRepo,
                                                 final UserRepository userRepo) {
             var gameEntity = GameEntityUtils.createC(userRepo);
-            if (gameRepo.findById(gameEntity.getFirst().getId()).isEmpty()) {
-                gameRepo.save(gameEntity.getFirst());
-                gameRepo.save(gameEntity.getSecond());
+            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
+                gameRepo.save(gameEntity);
             }
 
             return GameJournalEntity.builder()
-                    .gameId(gameEntity.getFirst().getGameId())
+                    .game(gameEntity)
                     .action(GameAction.LEAVE)
                     .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
                     .build();
@@ -234,28 +206,15 @@ public class TestData {
         public static MessageEntity createA(final GameRepository gameRepo,
                                             final UserRepository userRepo) {
 
-            var gameEntityA = GameEntityUtils.createA(userRepo);
-
-            if (gameRepo.findById(gameEntityA.getFirst().getId()).isEmpty()) {
-                gameRepo.save(gameEntityA.getFirst());
-                gameRepo.save(gameEntityA.getSecond());
+            var gameEntity = GameEntityUtils.createA(userRepo);
+            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
+                gameRepo.save(gameEntity);
             }
-
-            var userBlackId = gameEntityA.getFirst().getUserColor() == UserColor.BLACK ?
-                    gameEntityA.getFirst().getUserId() : gameEntityA.getSecond().getUserId();
-
-            var userBlackOpt = userRepo.findById(userBlackId);
-
-            if (userBlackOpt.isEmpty()) {
-                return null;
-            }
-
-            var userBlack = userBlackOpt.get();
 
             return MessageEntity.builder()
                     .messageId(1L)
-                    .gameId(gameEntityA.getFirst().getGameId())
-                    .author(userBlack)
+                    .game(gameEntity)
+                    .author(gameEntity.getUserWhite())
                     .text("tests are boring")
                     .build();
         }
@@ -263,28 +222,15 @@ public class TestData {
         public static MessageEntity createB(final GameRepository gameRepo,
                                             final UserRepository userRepo) {
 
-            var gameEntityB = GameEntityUtils.createB(userRepo);
-
-            if (gameRepo.findById(gameEntityB.getFirst().getId()).isEmpty()) {
-                gameRepo.save(gameEntityB.getFirst());
-                gameRepo.save(gameEntityB.getSecond());
+            var gameEntity = GameEntityUtils.createB(userRepo);
+            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
+                gameRepo.save(gameEntity);
             }
-
-            var userBlackId = gameEntityB.getFirst().getUserColor() == UserColor.BLACK ?
-                    gameEntityB.getFirst().getUserId() : gameEntityB.getSecond().getUserId();
-
-            var userBlackOpt = userRepo.findById(userBlackId);
-
-            if (userBlackOpt.isEmpty()) {
-                return null;
-            }
-
-            var userBlack = userBlackOpt.get();
 
             return MessageEntity.builder()
                     .messageId(2L)
-                    .gameId(gameEntityB.getFirst().getGameId())
-                    .author(userBlack)
+                    .game(gameEntity)
+                    .author(gameEntity.getUserWhite())
                     .text("very boring")
                     .build();
         }
@@ -292,31 +238,17 @@ public class TestData {
         public static MessageEntity createC(final GameRepository gameRepo,
                                             final UserRepository userRepo) {
 
-            var gameEntityC = GameEntityUtils.createC(userRepo);
-
-            if (gameRepo.findById(gameEntityC.getFirst().getId()).isEmpty()) {
-                gameRepo.save(gameEntityC.getFirst());
-                gameRepo.save(gameEntityC.getSecond());
+            var gameEntity = GameEntityUtils.createC(userRepo);
+            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
+                gameRepo.save(gameEntity);
             }
-
-            var userBlackId = gameEntityC.getFirst().getUserColor() == UserColor.BLACK ?
-                    gameEntityC.getFirst().getUserId() : gameEntityC.getSecond().getUserId();
-
-            var userBlackOpt = userRepo.findById(userBlackId);
-
-            if (userBlackOpt.isEmpty()) {
-                return null;
-            }
-
-            var userBlack = userBlackOpt.get();
 
             return MessageEntity.builder()
                     .messageId(3L)
-                    .gameId(gameEntityC.getFirst().getGameId())
-                    .author(userBlack)
+                    .game(gameEntity)
+                    .author(gameEntity.getUserWhite())
                     .text("very very boring")
                     .build();
         }
     }
-
 }
