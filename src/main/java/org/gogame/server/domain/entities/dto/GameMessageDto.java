@@ -13,7 +13,7 @@ public class GameMessageDto {
 
     private Long gameId;
 
-    private Long author;
+    private Long authorId;
 
     private String content;
 

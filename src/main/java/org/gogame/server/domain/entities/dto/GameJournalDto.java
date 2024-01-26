@@ -14,6 +14,8 @@ public class GameJournalDto {
 
     private Long gameId;
 
+    private Long authorId;
+
     private Integer turnX;
 
     private Integer turnY;
