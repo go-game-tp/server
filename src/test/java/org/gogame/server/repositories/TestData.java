@@ -210,7 +210,6 @@ public class TestData {
             gameRepo.save(gameEntity);
 
             return MessageEntity.builder()
-                    .messageId(1L)
                     .game(gameEntity)
                     .author(gameEntity.getUserWhite())
                     .text("tests are boring")
@@ -224,7 +223,6 @@ public class TestData {
             gameRepo.save(gameEntity);
 
             return MessageEntity.builder()
-                    .messageId(2L)
                     .game(gameEntity)
                     .author(gameEntity.getUserWhite())
                     .text("very boring")
@@ -238,7 +236,6 @@ public class TestData {
             gameRepo.save(gameEntity);
 
             return MessageEntity.builder()
-                    .messageId(3L)
                     .game(gameEntity)
                     .author(gameEntity.getUserWhite())
                     .text("very very boring")
