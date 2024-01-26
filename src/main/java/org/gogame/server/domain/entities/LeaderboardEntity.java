@@ -14,6 +14,7 @@ import org.hibernate.validator.constraints.Range;
 public class LeaderboardEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "user_pos", nullable = false, unique = true)
     private Long userPos;
 

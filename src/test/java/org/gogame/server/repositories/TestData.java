@@ -164,7 +164,6 @@ public class TestData {
             }
 
             return LeaderboardEntity.builder()
-                    .userPos(1L)
                     .user(userA)
                     .score(666L)
                     .build();
@@ -179,7 +178,6 @@ public class TestData {
             }
 
             return LeaderboardEntity.builder()
-                    .userPos(2L)
                     .user(userB)
                     .score(145L)
                     .build();
@@ -194,7 +192,6 @@ public class TestData {
             }
 
             return LeaderboardEntity.builder()
-                    .userPos(3L)
                     .user(userC)
                     .score(110L)
                     .build();
