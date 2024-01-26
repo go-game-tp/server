@@ -10,7 +10,6 @@ public class TestData {
 
         public static UserEntity createA() {
             return UserEntity.builder()
-                    .userId(1L)
                     .nickname("romka")
                     .passwordHash("qwertyuiop")
                     .email("romka@romka.romka")
@@ -20,7 +19,6 @@ public class TestData {
 
         public static UserEntity createB() {
             return UserEntity.builder()
-                    .userId(2L)
                     .nickname("romka2")
                     .passwordHash("qwertyuiop2")
                     .email("romka2@romka.romka")
@@ -30,7 +28,6 @@ public class TestData {
 
         public static UserEntity createC() {
             return UserEntity.builder()
-                    .userId(3L)
                     .nickname("romka3")
                     .passwordHash("qwertyuiop3")
                     .email("romka3@romka.romka")
@@ -47,9 +44,14 @@ public class TestData {
 
             if (userRepo.findByNickname(userW.getNickname()).isEmpty()) {
                 userRepo.save(userW);
+            } else {
+                userW = userRepo.findByNickname(userW.getNickname()).get();
             }
+
             if (userRepo.findByNickname(userB.getNickname()).isEmpty()) {
                 userRepo.save(userB);
+            } else {
+                userB = userRepo.findByNickname(userB.getNickname()).get();
             }
 
             var gameId = 1L;
@@ -68,9 +70,14 @@ public class TestData {
 
             if (userRepo.findByNickname(userW.getNickname()).isEmpty()) {
                 userRepo.save(userW);
+            } else {
+                userW = userRepo.findByNickname(userW.getNickname()).get();
             }
+
             if (userRepo.findByNickname(userB.getNickname()).isEmpty()) {
                 userRepo.save(userB);
+            } else {
+                userB = userRepo.findByNickname(userB.getNickname()).get();
             }
 
             var gameId = 2L;
@@ -89,9 +96,14 @@ public class TestData {
 
             if (userRepo.findByNickname(userW.getNickname()).isEmpty()) {
                 userRepo.save(userW);
+            } else {
+                userW = userRepo.findByNickname(userW.getNickname()).get();
             }
+
             if (userRepo.findByNickname(userB.getNickname()).isEmpty()) {
                 userRepo.save(userB);
+            } else {
+                userB = userRepo.findByNickname(userB.getNickname()).get();
             }
 
             var gameId = 3L;
@@ -118,6 +130,7 @@ public class TestData {
                     .turnId(1L)
                     .game(gameEntity)
                     .action(GameAction.MOVE)
+                    .author(gameEntity.getUserWhite())
                     .turnX(1)
                     .turnY(2)
                     .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
@@ -134,6 +147,7 @@ public class TestData {
             return GameJournalEntity.builder()
                     .game(gameEntity)
                     .action(GameAction.STOP_REQ)
+                    .author(gameEntity.getUserBlack())
                     .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
                     .build();
         }
@@ -148,6 +162,7 @@ public class TestData {
             return GameJournalEntity.builder()
                     .game(gameEntity)
                     .action(GameAction.LEAVE)
+                    .author(gameEntity.getUserWhite())
                     .turnDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 23, 27, 18)))
                     .build();
         }
@@ -159,7 +174,7 @@ public class TestData {
 
             var userA = UserEntityUtils.createA();
 
-            if (userRepo.findById(userA.getUserId()).isEmpty()) {
+            if (userRepo.findByNickname(userA.getNickname()).isEmpty()) {
                 userRepo.save(userA);
             }
 
@@ -174,7 +189,7 @@ public class TestData {
 
             var userB = UserEntityUtils.createB();
 
-            if (userRepo.findById(userB.getUserId()).isEmpty()) {
+            if (userRepo.findByNickname(userB.getNickname()).isEmpty()) {
                 userRepo.save(userB);
             }
 
@@ -189,7 +204,7 @@ public class TestData {
 
             var userC = UserEntityUtils.createC();
 
-            if (userRepo.findById(userC.getUserId()).isEmpty()) {
+            if (userRepo.findByNickname(userC.getNickname()).isEmpty()) {
                 userRepo.save(userC);
             }
 
