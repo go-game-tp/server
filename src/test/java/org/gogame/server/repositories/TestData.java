@@ -116,7 +116,6 @@ public class TestData {
             gameRepo.save(gameEntity);
 
             return GameJournalEntity.builder()
-                    .turnId(1L)
                     .game(gameEntity)
                     .action(GameAction.MOVE)
                     .author(gameEntity.getUserWhite())
