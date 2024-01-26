@@ -54,10 +54,7 @@ public class TestData {
                 userB = userRepo.findByNickname(userB.getNickname()).get();
             }
 
-            var gameId = 1L;
-
             return GameEntity.builder()
-                    .gameId(gameId)
                     .userWhite(userW)
                     .userBlack(userB)
                     .winner(userW)
@@ -80,10 +77,7 @@ public class TestData {
                 userB = userRepo.findByNickname(userB.getNickname()).get();
             }
 
-            var gameId = 2L;
-
             return GameEntity.builder()
-                    .gameId(gameId)
                     .userWhite(userW)
                     .userBlack(userB)
                     .winner(userW)
@@ -106,10 +100,7 @@ public class TestData {
                 userB = userRepo.findByNickname(userB.getNickname()).get();
             }
 
-            var gameId = 3L;
-
             return GameEntity.builder()
-                    .gameId(gameId)
                     .userWhite(userW)
                     .userBlack(userB)
                     .winner(userB)
@@ -122,9 +113,7 @@ public class TestData {
         public static GameJournalEntity createA(final GameRepository gameRepo,
                                                 final UserRepository userRepo) {
             var gameEntity = GameEntityUtils.createA(userRepo);
-            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
-                gameRepo.save(gameEntity);
-            }
+            gameRepo.save(gameEntity);
 
             return GameJournalEntity.builder()
                     .turnId(1L)
@@ -140,9 +129,7 @@ public class TestData {
         public static GameJournalEntity createB(final GameRepository gameRepo,
                                                 final UserRepository userRepo) {
             var gameEntity = GameEntityUtils.createB(userRepo);
-            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
-                gameRepo.save(gameEntity);
-            }
+            gameRepo.save(gameEntity);
 
             return GameJournalEntity.builder()
                     .game(gameEntity)
@@ -155,9 +142,7 @@ public class TestData {
         public static GameJournalEntity createC(final GameRepository gameRepo,
                                                 final UserRepository userRepo) {
             var gameEntity = GameEntityUtils.createC(userRepo);
-            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
-                gameRepo.save(gameEntity);
-            }
+            gameRepo.save(gameEntity);
 
             return GameJournalEntity.builder()
                     .game(gameEntity)
@@ -222,9 +207,7 @@ public class TestData {
                                             final UserRepository userRepo) {
 
             var gameEntity = GameEntityUtils.createA(userRepo);
-            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
-                gameRepo.save(gameEntity);
-            }
+            gameRepo.save(gameEntity);
 
             return MessageEntity.builder()
                     .messageId(1L)
@@ -238,9 +221,7 @@ public class TestData {
                                             final UserRepository userRepo) {
 
             var gameEntity = GameEntityUtils.createB(userRepo);
-            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
-                gameRepo.save(gameEntity);
-            }
+            gameRepo.save(gameEntity);
 
             return MessageEntity.builder()
                     .messageId(2L)
@@ -254,9 +235,7 @@ public class TestData {
                                             final UserRepository userRepo) {
 
             var gameEntity = GameEntityUtils.createC(userRepo);
-            if (gameRepo.findById(gameEntity.getGameId()).isEmpty()) {
-                gameRepo.save(gameEntity);
-            }
+            gameRepo.save(gameEntity);
 
             return MessageEntity.builder()
                     .messageId(3L)
