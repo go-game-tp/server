@@ -28,5 +28,5 @@ public class MessageEntity {
     private UserEntity author;
 
     @Column(nullable = false, length = 2048)
-    private String text;
+    private String content;
 }
