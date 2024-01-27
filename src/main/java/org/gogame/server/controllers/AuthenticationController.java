@@ -5,11 +5,14 @@ import org.gogame.server.domain.entities.dto.AuthResponseDto;
 import org.gogame.server.domain.entities.dto.UserLoginDto;
 import org.gogame.server.domain.entities.dto.UserRegisterDto;
 import org.gogame.server.service.AuthenticationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -22,13 +25,26 @@ public class AuthenticationController {
     public ResponseEntity<AuthResponseDto> register (
             @RequestBody UserRegisterDto request
     ) {
-        return ResponseEntity.ok(service.register(request));
+        AuthResponseDto response;
+        try {
+            response = service.register(request);
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponseDto> authenticate (
             @RequestBody UserLoginDto request
     ) {
-        return ResponseEntity.ok(service.authenticate(request));
+
+        AuthResponseDto response;
+        try {
+            response = service.authenticate(request);
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

@@ -7,9 +7,13 @@ import org.gogame.server.domain.entities.dto.UserLoginDto;
 import org.gogame.server.domain.entities.dto.UserRegisterDto;
 import org.gogame.server.mappers.Mapper;
 import org.gogame.server.repositories.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,9 +24,13 @@ public class AuthenticationService {
     private final AuthenticationManager authManager;
     private final Mapper<UserRegisterDto, UserEntity> userRegisterMapper;
 
-    public AuthResponseDto register(UserRegisterDto dto) {
+    public AuthResponseDto register(UserRegisterDto dto) throws SQLException {
         UserEntity registeredUser = userRegisterMapper.mapTo(dto);
-        userRepo.save(registeredUser);
+        try {
+            userRepo.save(registeredUser);
+        } catch (DataIntegrityViolationException ex) {
+            throw new SQLException("User with this nickname already exists");
+        }
         var jwtToken = jwtService.generateToken(registeredUser);
         return AuthResponseDto.builder()
                 .userId(registeredUser.getUserId())
@@ -30,16 +38,20 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthResponseDto authenticate(UserLoginDto dto) {
-        authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        dto.getNickname(),
-                        dto.getPassword()
-                )
-        );
+    public AuthResponseDto authenticate(UserLoginDto dto) throws SQLException {
+        UserEntity loggedUser;
+        try {
+            authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            dto.getNickname(),
+                            dto.getPassword()
+                    )
+            );
 
-        var loggedUser = userRepo.findByNickname(dto.getNickname())
-                .orElseThrow();
+            loggedUser = userRepo.findByNickname(dto.getNickname()).orElseThrow();
+        } catch (AuthenticationException | NullPointerException ex) {
+            throw new SQLException("Invalid credentials");
+        }
 
         var jwtToken = jwtService.generateToken(loggedUser);
         return AuthResponseDto.builder()
