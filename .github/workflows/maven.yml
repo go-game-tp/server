@@ -31,6 +31,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       env:
-        SPRING_AUTH_JWT_ENCRYPT_KEY: ${{ secrets.SPRING_AUTH_JWT_ENCRYPT_KEY }}
+        SPRING_AUTH_JWT_ENCRYPT_KEY: ${{ vars.SPRING_AUTH_JWT_ENCRYPT_KEY }}
       run: mvn -B package --file pom.xml
       
