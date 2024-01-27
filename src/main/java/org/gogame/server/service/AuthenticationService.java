@@ -1,7 +1,7 @@
 package org.gogame.server.service;
 
 import lombok.RequiredArgsConstructor;
-import org.gogame.server.auth.AuthenticationResponse;
+import org.gogame.server.domain.entities.dto.AuthResponseDto;
 import org.gogame.server.domain.entities.UserEntity;
 import org.gogame.server.domain.entities.dto.UserLoginDto;
 import org.gogame.server.domain.entities.dto.UserRegisterDto;
@@ -20,16 +20,17 @@ public class AuthenticationService {
     private final AuthenticationManager authManager;
     private final Mapper<UserRegisterDto, UserEntity> userRegisterMapper;
 
-    public AuthenticationResponse register(UserRegisterDto dto) {
+    public AuthResponseDto register(UserRegisterDto dto) {
         UserEntity registeredUser = userRegisterMapper.mapTo(dto);
         userRepo.save(registeredUser);
         var jwtToken = jwtService.generateToken(registeredUser);
-        return AuthenticationResponse.builder()
+        return AuthResponseDto.builder()
+                .userId(registeredUser.getUserId())
                 .token(jwtToken)
                 .build();
     }
 
-    public AuthenticationResponse authenticate(UserLoginDto dto) {
+    public AuthResponseDto authenticate(UserLoginDto dto) {
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         dto.getNickname(),
@@ -37,11 +38,12 @@ public class AuthenticationService {
                 )
         );
 
-        var user = userRepo.findByNickname(dto.getNickname())
+        var loggedUser = userRepo.findByNickname(dto.getNickname())
                 .orElseThrow();
 
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
+        var jwtToken = jwtService.generateToken(loggedUser);
+        return AuthResponseDto.builder()
+                .userId(loggedUser.getUserId())
                 .token(jwtToken)
                 .build();
     }

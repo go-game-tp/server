@@ -1,7 +1,7 @@
 package org.gogame.server.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.gogame.server.auth.AuthenticationResponse;
+import org.gogame.server.domain.entities.dto.AuthResponseDto;
 import org.gogame.server.domain.entities.dto.UserLoginDto;
 import org.gogame.server.domain.entities.dto.UserRegisterDto;
 import org.gogame.server.service.AuthenticationService;
@@ -19,14 +19,14 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register (
+    public ResponseEntity<AuthResponseDto> register (
             @RequestBody UserRegisterDto request
     ) {
         return ResponseEntity.ok(service.register(request));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate (
+    public ResponseEntity<AuthResponseDto> authenticate (
             @RequestBody UserLoginDto request
     ) {
         return ResponseEntity.ok(service.authenticate(request));
