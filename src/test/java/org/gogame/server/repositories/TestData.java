@@ -11,7 +11,7 @@ public class TestData {
         public static UserEntity createA() {
             return UserEntity.builder()
                     .nickname("romka")
-                    .passwordHash("qwertyuiop")
+                    .password("qwertyuiop")
                     .email("romka@romka.romka")
                     .joinDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 18, 33, 11)))
                     .build();
@@ -20,7 +20,7 @@ public class TestData {
         public static UserEntity createB() {
             return UserEntity.builder()
                     .nickname("romka2")
-                    .passwordHash("qwertyuiop2")
+                    .password("qwertyuiop2")
                     .email("romka2@romka.romka")
                     .joinDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 18, 33, 12)))
                     .build();
@@ -29,7 +29,7 @@ public class TestData {
         public static UserEntity createC() {
             return UserEntity.builder()
                     .nickname("romka3")
-                    .passwordHash("qwertyuiop3")
+                    .password("qwertyuiop3")
                     .email("romka3@romka.romka")
                     .joinDate(Timestamp.valueOf(LocalDateTime.of(2024, 1, 12, 18, 33, 12)))
                     .build();
