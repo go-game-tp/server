@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.gogame.server.repositories.TokenRepository;
 import org.gogame.server.service.JwtService;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final TokenRepository tokenRepo;
 
     @Override
     protected void doFilterInternal(
@@ -44,7 +46,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (nickname != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(nickname);
 
-            if (jwtService.isTokenValid(jwt, userDetails)) {
+            var isTokenValid = tokenRepo.findByToken(jwt)
+                .map(t -> !t.getExpired() && !t.getRevoked())
+                .orElse(false);
+
+            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
                 var authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
