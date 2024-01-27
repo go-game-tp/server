@@ -1,6 +1,5 @@
 package org.gogame.server.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
@@ -19,8 +18,7 @@ import java.util.Map;
 @Service
 public class JwtService {
 
-    @Value("${spring.auth.jwt.encrypt_key}")
-    private String SECRET_KEY;
+    private final static String SECRET_KEY = "BD041814B8ECD8FA5B35C22E52F6F9FBFD2E941E49BB8279C0C4AE7A990C7EC2";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
