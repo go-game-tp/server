@@ -24,8 +24,8 @@ public class UserEntity implements UserDetails {
     @Column(length = 64, nullable = false, unique = true)
     private String nickname;
 
-    @Column(name = "password", length = 64, nullable = false)
-    private String password;
+    @Column(name = "password_hash", length = 100, nullable = false)
+    private String passwordHash;
 
     @Column(length = 128, nullable = false, unique = true)
     private String email;
@@ -43,7 +43,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return passwordHash;
     }
 
     @Override

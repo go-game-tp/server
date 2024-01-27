@@ -24,7 +24,7 @@ public class UserRegisterMapper implements Mapper<UserRegisterDto, UserEntity> {
     @Override
     public UserEntity mapTo(UserRegisterDto userRegisterDto) {
         UserEntity userEntity = modelMapper.map(userRegisterDto, UserEntity.class);
-        userEntity.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
+        userEntity.setPasswordHash(passwordEncoder.encode(userRegisterDto.getPassword()));
         userEntity.setJoinDate(new Timestamp(new Date().getTime()));
         return userEntity;
     }
