@@ -1,6 +1,5 @@
 package org.gogame.server.service;
 
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.gogame.server.domain.entities.GameEntity;
 import org.gogame.server.domain.entities.UserEntity;
@@ -11,9 +10,6 @@ import org.gogame.server.repositories.GameRepository;
 import org.gogame.server.repositories.UserGameInviteRepository;
 import org.gogame.server.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.system.SystemProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;

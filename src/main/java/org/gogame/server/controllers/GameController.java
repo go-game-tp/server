@@ -1,9 +1,7 @@
 package org.gogame.server.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.gogame.server.domain.entities.UserInviteStatus;
 import org.gogame.server.domain.entities.dto.*;
-import org.gogame.server.service.AuthenticationService;
 import org.gogame.server.service.GameService;
 import org.gogame.server.service.PermissionValidatorService;
 import org.springframework.http.HttpStatus;

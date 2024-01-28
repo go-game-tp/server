@@ -1,8 +1,6 @@
 package org.gogame.server.repositories;
 
-import org.gogame.server.domain.entities.TokenEntity;
 import org.gogame.server.domain.entities.UserGameInviteEntity;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
