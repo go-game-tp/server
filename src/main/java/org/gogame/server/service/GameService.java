@@ -19,6 +19,8 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -73,8 +75,6 @@ public class GameService {
         var invite = userGameInviteRepo.findByUserIds(sender.getUserId(), receiver.getUserId()).get(0);
         invite.setStatus(UserInviteStatus.ACCEPTED);
 
-        userGameInviteRepo.deleteById(invite.getGameInviteId());
-
         return modelMapper.map(invite, UserInviteDto.class);
     }
 
@@ -90,18 +90,20 @@ public class GameService {
         return modelMapper.map(invite, UserInviteDto.class);
     }
 
-    public UserInviteDto fetchGameInvite(UserInviteDto userInviteDto) throws SQLException {
+    public List<UserInviteDto> fetchGameInvite(Long userId) throws SQLException {
 
-        var users = getUsers(userInviteDto);
-        var sender = users.getFirst();
-        var receiver = users.getSecond();
+        var invites = userGameInviteRepo.findBySingleUserId(userId);
+        var inviteDtos = new ArrayList<UserInviteDto>();
 
-        var invite = userGameInviteRepo.findByUserIds(sender.getUserId(), receiver.getUserId()).get(0);
+        for (UserGameInviteEntity invite : invites) {
 
-        if (invite.getStatus() == UserInviteStatus.ACCEPTED || invite.getStatus() == UserInviteStatus.REJECTED)
-            userGameInviteRepo.deleteById(invite.getGameInviteId());
+            inviteDtos.add(modelMapper.map(invite, UserInviteDto.class));
 
-        return modelMapper.map(invite, UserInviteDto.class);
+            if (invite.getStatus() == UserInviteStatus.ACCEPTED || invite.getStatus() == UserInviteStatus.REJECTED)
+                userGameInviteRepo.deleteById(invite.getGameInviteId());
+        }
+
+        return inviteDtos;
     }
 
     private Pair<UserEntity, UserEntity> getUsers(UserInviteDto userInviteDto) throws SQLException {

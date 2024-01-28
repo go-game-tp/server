@@ -17,4 +17,12 @@ public interface UserGameInviteRepository extends CrudRepository<UserGameInviteE
             AND u.userReceiver.userId = :receiver_id
             """)
     List<UserGameInviteEntity> findByUserIds(@Param("sender_id") Long senderId, @Param("receiver_id") Long receiverId);
+
+    @Query(value = """
+            SELECT u
+            FROM UserGameInviteEntity u
+            WHERE u.userSender.userId = :user_id
+            OR u.userReceiver.userId = :user_id
+            """)
+    List<UserGameInviteEntity> findBySingleUserId(@Param("user_id") Long userId);
 }

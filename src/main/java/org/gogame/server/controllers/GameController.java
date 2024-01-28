@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/game")
@@ -72,18 +73,17 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/invite/fetch")
-    public ResponseEntity<UserInviteDto> fetchGameInvite (
-            @RequestBody UserInviteDto request,
+    @GetMapping("/invite/fetch/{id}")
+    public ResponseEntity<List<UserInviteDto>> fetchGameInvite (
+            @PathVariable Long id,
             @RequestHeader("Authorization") String token
     ) {
-        if (!validatorService.validateUserId(request.getUserSenderId(), token) &&
-                !validatorService.validateUserId(request.getUserReceiverId(), token)) {
+        if (!validatorService.validateUserId(id, token)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        UserInviteDto response;
+        List<UserInviteDto> response;
         try {
-            response = service.fetchGameInvite(request);
+            response = service.fetchGameInvite(id);
         } catch (SQLException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
