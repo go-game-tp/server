@@ -13,8 +13,8 @@ public interface UserGameInviteRepository extends CrudRepository<UserGameInviteE
     @Query(value = """
             SELECT u
             FROM UserGameInviteEntity u
-            WHERE u.userSender = :sender_id
-            AND u.userReceiver = :receiver_id
+            WHERE u.userSender.userId = :sender_id
+            AND u.userReceiver.userId = :receiver_id
             """)
     List<UserGameInviteEntity> findByUserIds(@Param("sender_id") Long senderId, @Param("receiver_id") Long receiverId);
 }
