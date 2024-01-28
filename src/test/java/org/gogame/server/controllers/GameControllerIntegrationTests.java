@@ -33,13 +33,10 @@ public class GameControllerIntegrationTests {
 
     private final ObjectMapper objectMapper;
 
-    private final UserRepository userRepo;
-
     @Autowired
-    public GameControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper, UserRepository userRepo) {
+    public GameControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
-        this.userRepo = userRepo;
     }
 
     @Test
@@ -64,7 +61,7 @@ public class GameControllerIntegrationTests {
     }
 
     @Test
-    public void testThatGameInviteCanBeAccepted() throws Exception {
+    public void testThatGameInviteCanBeFetchedByBothPlayers() throws Exception {
 
         UserRegisterDto regA = TestData.RegisterDtoUtils.createA();
         MvcResult mvcAResult = ControllerUtils.registerUser(mockMvc, objectMapper, regA);
@@ -76,8 +73,44 @@ public class GameControllerIntegrationTests {
         var receiverId = ControllerUtils.getUserId(mvcBResult);
 
         UserInviteDto invite = UserInviteDto.builder()
-                .userSenderId(senderId)
-                .userReceiverId(receiverId)
+                .userSenderId(ControllerUtils.getUserId(mvcAResult))
+                .userReceiverId(ControllerUtils.getUserId(mvcBResult))
+                .build();
+
+        sendGameInvite(
+                invite,
+                ControllerUtils.getJwtToken(mvcAResult)
+        );
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/v1/game/invite/fetch/" + senderId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", ControllerUtils.getJwtToken(mvcAResult))
+        ).andExpect(
+                MockMvcResultMatchers.status().is(HttpStatus.OK.value())
+        );
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/v1/game/invite/fetch/" + receiverId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", ControllerUtils.getJwtToken(mvcBResult))
+        ).andExpect(
+                MockMvcResultMatchers.status().is(HttpStatus.OK.value())
+        );
+    }
+
+    @Test
+    public void testThatGameInviteCanBeAcceptedAndIsDeleted() throws Exception {
+
+        UserRegisterDto regA = TestData.RegisterDtoUtils.createA();
+        MvcResult mvcAResult = ControllerUtils.registerUser(mockMvc, objectMapper, regA);
+
+        UserRegisterDto regB = TestData.RegisterDtoUtils.createB();
+        MvcResult mvcBResult = ControllerUtils.registerUser(mockMvc, objectMapper, regB);
+
+        UserInviteDto invite = UserInviteDto.builder()
+                .userSenderId(ControllerUtils.getUserId(mvcAResult))
+                .userReceiverId(ControllerUtils.getUserId(mvcBResult))
                 .build();
 
         sendGameInvite(
@@ -87,6 +120,8 @@ public class GameControllerIntegrationTests {
 
         String inviteJson = objectMapper.writeValueAsString(invite);
 
+        String senderToken = ControllerUtils.getJwtToken(mvcBResult);
+
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/game/invite/accept")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -95,19 +130,69 @@ public class GameControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.status().is(HttpStatus.OK.value())
         );
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/v1/game/invite/fetch")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inviteJson)
+                        .header("Authorization", senderToken)
+        ).andExpect(
+                MockMvcResultMatchers.status().is(HttpStatus.NOT_FOUND.value())
+        ).andReturn();
     }
 
-    private MvcResult sendGameInvite(UserInviteDto userInviteDto, String senderToken) throws Exception {
+    @Test
+    public void testThatGameInviteCanBeRejectedAndIsDeleted() throws Exception {
+
+        UserRegisterDto regA = TestData.RegisterDtoUtils.createA();
+        MvcResult mvcAResult = ControllerUtils.registerUser(mockMvc, objectMapper, regA);
+
+        UserRegisterDto regB = TestData.RegisterDtoUtils.createB();
+        MvcResult mvcBResult = ControllerUtils.registerUser(mockMvc, objectMapper, regB);
+
+        UserInviteDto invite = UserInviteDto.builder()
+                .userSenderId(ControllerUtils.getUserId(mvcAResult))
+                .userReceiverId(ControllerUtils.getUserId(mvcBResult))
+                .build();
+
+        sendGameInvite(
+                invite,
+                ControllerUtils.getJwtToken(mvcAResult)
+        );
+
+        String inviteJson = objectMapper.writeValueAsString(invite);
+
+        String senderToken = ControllerUtils.getJwtToken(mvcBResult);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/v1/game/invite/reject")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inviteJson)
+                        .header("Authorization", ControllerUtils.getJwtToken(mvcBResult))
+        ).andExpect(
+                MockMvcResultMatchers.status().is(HttpStatus.OK.value())
+        );
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/v1/game/invite/fetch")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inviteJson)
+                        .header("Authorization", senderToken)
+        ).andExpect(
+                MockMvcResultMatchers.status().is(HttpStatus.NOT_FOUND.value())
+        ).andReturn();
+    }
+
+    private void sendGameInvite(UserInviteDto userInviteDto, String senderToken) throws Exception {
         String inviteJson = objectMapper.writeValueAsString(userInviteDto);
 
-        return mockMvc.perform(
+        mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/game/invite/send")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(inviteJson)
                         .header("Authorization", senderToken)
         ).andExpect(
                 MockMvcResultMatchers.status().is(HttpStatus.CREATED.value())
-        ).andReturn();
+        );
     }
-
 }

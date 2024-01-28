@@ -82,6 +82,9 @@ public class GameController {
         List<UserInviteDto> response;
         try {
             response = service.fetchGameInvite(id);
+            if (response.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
         } catch (SQLException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }

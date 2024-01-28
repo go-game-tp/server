@@ -94,10 +94,16 @@ public class GameService {
     public List<UserInviteDto> fetchGameInvite(Long userId) throws SQLException {
 
         var invites = userGameInviteRepo.findBySingleUserId(userId);
-        var inviteDtos = new ArrayList<UserInviteDto>();
+        List<UserInviteDto> inviteDtos = new ArrayList<>();
 
-        for (UserGameInviteEntity invite : invites) {
-            inviteDtos.add(modelMapper.map(invite, UserInviteDto.class));
+        for (var invite : invites) {
+            inviteDtos.add(
+                    UserInviteDto.builder()
+                            .userSenderId(invite.getUserSender().getUserId())
+                            .userReceiverId(invite.getUserReceiver().getUserId())
+                            .inviteStatus(invite.getStatus())
+                            .build()
+            );
         }
 
         return inviteDtos;
