@@ -52,7 +52,7 @@ public class UserProfileControllerIntegrationTests {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/api/v1/user/profile/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", TestData.getJwtToken(mvcResult))
+                        .header("Authorization", ControllerUtils.getJwtToken(mvcResult))
         ).andExpect(
                 MockMvcResultMatchers.status().is(HttpStatus.OK.value())
         );
@@ -77,7 +77,7 @@ public class UserProfileControllerIntegrationTests {
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/api/v1/user/bio/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", TestData.getJwtToken(mvcResult))
+                        .header("Authorization", ControllerUtils.getJwtToken(mvcResult))
                         .content(bioJson)
         ).andExpect(
                 MockMvcResultMatchers.status().is(HttpStatus.OK.value())
@@ -116,7 +116,7 @@ public class UserProfileControllerIntegrationTests {
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/api/v1/user/bio/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", TestData.getJwtToken(mvcResult))
+                        .header("Authorization", ControllerUtils.getJwtToken(mvcResult))
                         .content(bioJson)
         ).andExpect(
                 MockMvcResultMatchers.status().is(HttpStatus.UNAUTHORIZED.value())

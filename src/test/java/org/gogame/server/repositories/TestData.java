@@ -358,19 +358,4 @@ public class TestData {
                     .build();
         }
     }
-
-    public static String getJwtToken(MvcResult mvcResult) {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        JsonNode jsonNode;
-        try {
-            String responseContent = mvcResult.getResponse().getContentAsString();
-            jsonNode = objectMapper.readTree(responseContent);
-        } catch (Exception e) {
-            System.err.println("Unable do decode JSON");
-            return "";
-        }
-        return "Bearer " + jsonNode.get("token").asText();
-
-    }
 }
