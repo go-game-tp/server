@@ -2,6 +2,7 @@ package org.gogame.server.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.io.Serializable;
 
@@ -25,4 +26,13 @@ public class UserGameInviteEntity {
     @ManyToOne
     @PrimaryKeyJoinColumn
     private UserEntity userReceiver;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Column(name = "invite_status", length = 9, nullable = false)
+    private UserInviteStatus status = UserInviteStatus.PENDING;
+
+    @Builder.Default
+    @Column(name = "game_id")
+    private Long gameId = -1L;
 }
