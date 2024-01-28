@@ -37,8 +37,6 @@ public class GameService {
         var sender = users.getFirst();
         var receiver = users.getSecond();
 
-        System.out.println("sender: " + sender.getUserId() + "; receiver: " + receiver.getUserId());
-
         var invite = UserGameInviteEntity.builder()
                 .userSender(sender)
                 .userReceiver(receiver)
