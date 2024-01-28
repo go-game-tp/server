@@ -26,8 +26,9 @@ public class GameService {
     private final GameRepository gameRepo;
     private final UserRepository userRepo;
     private final UserGameInviteRepository userGameInviteRepo;
-    private final Random random;
     private final ModelMapper modelMapper;
+
+    private Random random;
 
     public UserInviteDto sendGameInvite(UserInviteDto userInviteDto) throws SQLException {
 
@@ -55,7 +56,7 @@ public class GameService {
         var sender = users.getFirst();
         var receiver = users.getSecond();
 
-        boolean colorPicker = random.nextBoolean();
+        boolean colorPicker = nextBoolean();
 
         var game = GameEntity.builder()
                 .userBlack(colorPicker ? sender : receiver)
@@ -114,6 +115,13 @@ public class GameService {
         }
 
         return Pair.of(sender.get(), receiver.get());
+    }
+
+    private boolean nextBoolean() {
+        if (random == null) {
+            random = new Random();
+        }
+        return random.nextBoolean();
     }
 
 }
