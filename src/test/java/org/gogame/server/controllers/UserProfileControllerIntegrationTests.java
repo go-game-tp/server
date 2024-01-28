@@ -69,7 +69,6 @@ public class UserProfileControllerIntegrationTests {
                         .header("Authorization", TestData.getJwtToken(mvcResult))
                         .param("id_author", "2")
                         .param("id_about", "1")
-
         ).andExpect(
                 MockMvcResultMatchers.status().is(HttpStatus.OK.value())
         );
@@ -78,15 +77,7 @@ public class UserProfileControllerIntegrationTests {
     @Test
     public void testThatUpdateUserBioReturns200() throws Exception {
         UserRegisterDto regA = TestData.RegisterDtoUtils.createA();
-        String regJson = objectMapper.writeValueAsString(regA);
-
-        MvcResult mvcResult = mockMvc.perform(
-                MockMvcRequestBuilders.post("/api/v1/auth/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(regJson)
-        ).andExpect(
-                MockMvcResultMatchers.status().is(HttpStatus.CREATED.value())
-        ).andReturn();
+        MvcResult mvcResult = ControllerUtils.registerUser(mockMvc, objectMapper, regA);
 
         UserBioDto bio = UserBioDto.builder().userId(1L).bio("good boi").build();
         String bioJson = objectMapper.writeValueAsString(bio);
@@ -94,7 +85,7 @@ public class UserProfileControllerIntegrationTests {
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/api/v1/user/bio/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", TestData.getJwtToken(mvcResult))
+                        .header("Authorization", ControllerUtils.getJwtToken(mvcResult))
                         .content(bioJson)
         ).andExpect(
                 MockMvcResultMatchers.status().is(HttpStatus.OK.value())
@@ -104,27 +95,10 @@ public class UserProfileControllerIntegrationTests {
     @Test
     public void testThatUnauthorizedUserBioUpdateReturns401() throws Exception {
         UserRegisterDto regA = TestData.RegisterDtoUtils.createA();
-        String regJson = objectMapper.writeValueAsString(regA);
-
-        mockMvc.perform(
-                MockMvcRequestBuilders.post("/api/v1/auth/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(regJson)
-        ).andExpect(
-                MockMvcResultMatchers.status().is(HttpStatus.CREATED.value())
-        );
-
+        ControllerUtils.registerUser(mockMvc, objectMapper, regA);
 
         UserRegisterDto regB = TestData.RegisterDtoUtils.createB();
-        regJson = objectMapper.writeValueAsString(regB);
-
-        MvcResult mvcResult = mockMvc.perform(
-                MockMvcRequestBuilders.post("/api/v1/auth/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(regJson)
-        ).andExpect(
-                MockMvcResultMatchers.status().is(HttpStatus.CREATED.value())
-        ).andReturn();
+        MvcResult mvcResult = ControllerUtils.registerUser(mockMvc, objectMapper, regB);
 
 
         UserBioDto bio = UserBioDto.builder().userId(1L).bio("hackerman").build();
@@ -133,7 +107,7 @@ public class UserProfileControllerIntegrationTests {
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/api/v1/user/bio/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", TestData.getJwtToken(mvcResult))
+                        .header("Authorization", ControllerUtils.getJwtToken(mvcResult))
                         .content(bioJson)
         ).andExpect(
                 MockMvcResultMatchers.status().is(HttpStatus.UNAUTHORIZED.value())
