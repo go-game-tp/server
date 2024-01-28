@@ -25,12 +25,10 @@ public class GameController {
     public ResponseEntity<UserInviteDto> sendGameInvite (
             @RequestBody UserInviteDto request
     ) {
-        System.out.println("dupa");
         UserInviteDto response;
         try {
             response = service.sendGameInvite(request);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
