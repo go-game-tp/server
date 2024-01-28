@@ -18,7 +18,4 @@ public class UserInviteDto {
 
     @Builder.Default
     private UserInviteStatus inviteStatus = UserInviteStatus.PENDING;
-
-    @Builder.Default
-    private Long gameId = -1L;
 }

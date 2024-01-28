@@ -72,6 +72,8 @@ public class GameService {
         var invite = userGameInviteRepo.findByUserIds(sender.getUserId(), receiver.getUserId()).get(0);
         invite.setStatus(UserInviteStatus.ACCEPTED);
 
+        userGameInviteRepo.delete(invite);
+
         return modelMapper.map(invite, UserInviteDto.class);
     }
 
@@ -84,6 +86,8 @@ public class GameService {
         var invite = userGameInviteRepo.findByUserIds(sender.getUserId(), receiver.getUserId()).get(0);
         invite.setStatus(UserInviteStatus.REJECTED);
 
+        userGameInviteRepo.delete(invite);
+
         return modelMapper.map(invite, UserInviteDto.class);
     }
 
@@ -93,11 +97,7 @@ public class GameService {
         var inviteDtos = new ArrayList<UserInviteDto>();
 
         for (UserGameInviteEntity invite : invites) {
-
             inviteDtos.add(modelMapper.map(invite, UserInviteDto.class));
-
-            if (invite.getStatus() == UserInviteStatus.ACCEPTED || invite.getStatus() == UserInviteStatus.REJECTED)
-                userGameInviteRepo.deleteById(invite.getGameInviteId());
         }
 
         return inviteDtos;

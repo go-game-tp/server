@@ -31,8 +31,4 @@ public class UserGameInviteEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "invite_status", length = 9, nullable = false)
     private UserInviteStatus status = UserInviteStatus.PENDING;
-
-    @Builder.Default
-    @Column(name = "game_id")
-    private Long gameId = -1L;
 }
