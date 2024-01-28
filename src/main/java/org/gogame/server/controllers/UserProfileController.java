@@ -44,7 +44,6 @@ public class UserProfileController {
         UserEntity userInfo;
         try {
             userInfo = userProfileService.getUserInfo(id_about);
-
         } catch (SQLException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -55,12 +54,9 @@ public class UserProfileController {
         } catch (SQLException ex) {
             userBio = UserBioEntity.builder()
                     .userId(id_about)
-            userBio = userBioService.getUserBio(id);
-        } catch (SQLException ex) {
-            userBio = UserBioEntity.builder()
-                    .userId(id)
                     .bio("")
                     .build();
+
         }
 
         var userProfile = Pair.of(userInfo, userBio);
