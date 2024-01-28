@@ -15,7 +15,4 @@ public class UserInviteDto {
     private Long userSenderId;
 
     private Long userReceiverId;
-
-    @Builder.Default
-    private UserInviteStatus inviteStatus = UserInviteStatus.PENDING;
 }

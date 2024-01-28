@@ -70,7 +70,6 @@ public class GameService {
         }
 
         var invite = userGameInviteRepo.findByUserIds(sender.getUserId(), receiver.getUserId()).get(0);
-        invite.setStatus(UserInviteStatus.ACCEPTED);
 
         userGameInviteRepo.delete(invite);
 
@@ -84,7 +83,6 @@ public class GameService {
         var receiver = users.getSecond();
 
         var invite = userGameInviteRepo.findByUserIds(sender.getUserId(), receiver.getUserId()).get(0);
-        invite.setStatus(UserInviteStatus.REJECTED);
 
         userGameInviteRepo.delete(invite);
 
@@ -101,7 +99,6 @@ public class GameService {
                     UserInviteDto.builder()
                             .userSenderId(invite.getUserSender().getUserId())
                             .userReceiverId(invite.getUserReceiver().getUserId())
-                            .inviteStatus(invite.getStatus())
                             .build()
             );
         }
