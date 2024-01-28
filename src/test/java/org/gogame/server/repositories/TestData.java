@@ -1,6 +1,7 @@
 package org.gogame.server.repositories;
 
 import org.gogame.server.domain.entities.*;
+import org.gogame.server.domain.entities.dto.UserInviteDto;
 import org.gogame.server.domain.entities.dto.UserLoginDto;
 import org.gogame.server.domain.entities.dto.UserRegisterDto;
 
@@ -295,6 +296,60 @@ public class TestData {
             return UserLoginDto.builder()
                     .nickname("c#")
                     .password("microsoft")
+                    .build();
+        }
+    }
+
+    public static class InviteDtoUtils {
+
+        public static UserInviteDto createA(final UserRepository userRepo) {
+            var userA = UserEntityUtils.createA();
+            var userB = UserEntityUtils.createB();
+
+            if (userRepo.findByNickname(userA.getNickname()).isEmpty()) {
+                userRepo.save(userA);
+            }
+            if (userRepo.findByNickname(userB.getNickname()).isEmpty()) {
+                userRepo.save(userB);
+            }
+
+            return UserInviteDto.builder()
+                    .userSenderId(userA.getUserId())
+                    .userReceiverId(userB.getUserId())
+                    .build();
+        }
+
+        public static UserInviteDto createB(final UserRepository userRepo) {
+            var userA = UserEntityUtils.createA();
+            var userC = UserEntityUtils.createC();
+
+            if (userRepo.findByNickname(userA.getNickname()).isEmpty()) {
+                userRepo.save(userA);
+            }
+            if (userRepo.findByNickname(userC.getNickname()).isEmpty()) {
+                userRepo.save(userC);
+            }
+
+            return UserInviteDto.builder()
+                    .userSenderId(userC.getUserId())
+                    .userReceiverId(userA.getUserId())
+                    .build();
+        }
+
+        public static UserInviteDto createC(final UserRepository userRepo) {
+            var userB = UserEntityUtils.createB();
+            var userC = UserEntityUtils.createC();
+
+            if (userRepo.findByNickname(userB.getNickname()).isEmpty()) {
+                userRepo.save(userB);
+            }
+            if (userRepo.findByNickname(userC.getNickname()).isEmpty()) {
+                userRepo.save(userC);
+            }
+
+            return UserInviteDto.builder()
+                    .userSenderId(userB.getUserId())
+                    .userReceiverId(userC.getUserId())
                     .build();
         }
     }
