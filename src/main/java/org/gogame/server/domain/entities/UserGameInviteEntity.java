@@ -2,9 +2,6 @@ package org.gogame.server.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-
-import java.io.Serializable;
 
 @Data
 @AllArgsConstructor

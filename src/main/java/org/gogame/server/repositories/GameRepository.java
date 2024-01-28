@@ -1,12 +1,9 @@
 package org.gogame.server.repositories;
 
 import org.gogame.server.domain.entities.GameEntity;
-import org.gogame.server.domain.entities.UserGameInviteEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-
-import java.util.List;
 
 public interface GameRepository extends CrudRepository<GameEntity, Long> {
     @Query(value = """
