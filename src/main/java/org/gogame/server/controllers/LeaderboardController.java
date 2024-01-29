@@ -31,17 +31,17 @@ public class LeaderboardController {
 
     @GetMapping("/leaderboard/{id}")
     public ResponseEntity<List<UserProfileDto>> getLeaderboard(
-            @PathVariable Long userId,
+            @PathVariable Long id,
             @RequestHeader("Authorization") String token
     ) {
 
-        if (!validatorService.validateUserId(userId, token)) {
+        if (!validatorService.validateUserId(id, token)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         List<UserProfileDto> leaderboard;
         try {
-            leaderboard = leaderboardService.getLeaderboard(userId);
+            leaderboard = leaderboardService.getLeaderboard(id);
         } catch (SQLException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
