@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserFriendshipRepository extends CrudRepository<UserFriendshipEntity, Long> {
     @Query(value = """
             SELECT DISTINCT f
-            FROM UserFrienshipEntity f
+            FROM UserFriendshipEntity f
             WHERE (
                 (f.userA.userId = :user_a_id AND f.userB.userId = :user_b_id)
                 OR (f.userA.userId = :user_b_id AND f.userB.userId = :user_a_id)
