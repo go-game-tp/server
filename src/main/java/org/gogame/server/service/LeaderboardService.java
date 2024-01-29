@@ -27,7 +27,7 @@ public class LeaderboardService {
 
         for (var leaderboardEntity : leaderboardRepo.findAll()) {
 
-            var currentUserId = leaderboardEntity.getUserId();
+            var currentUserId = leaderboardEntity.getUser().getUserId();
 
             var score = leaderboardEntity.getScore();
 

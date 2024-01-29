@@ -52,7 +52,7 @@ public class UserProfileController {
             userBio = userBioService.getUserBio(idAbout);
         } catch (SQLException ex) {
             userBio = UserBioEntity.builder()
-                    .userId(idAbout)
+                    .user(userInfo)
                     .bio("")
                     .build();
 
