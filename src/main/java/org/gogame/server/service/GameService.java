@@ -112,6 +112,7 @@ public class GameService {
         return gameRepo.findCurrentGame(userId);
     }
 
+
     public void setGameWinner(Long gameId, Long userId) throws SQLException {
         var game = gameRepo.findById(gameId);
         if (game.isEmpty()) {
