@@ -50,12 +50,17 @@ public class LeaderboardService {
             var userStats = userStatsEntity.get();
             var winsPerLosses = userStats.getGameWon().floatValue() / userStats.getGameLost().floatValue();
 
+            if (userStats.getGameLost().intValue() == 0) {
+                winsPerLosses = 0.0f;
+            }
+
             var friendshipEntity = userFriendshipRepo.findByUserIds(userId, currentUserId);
 
             var isFriend = friendshipEntity.isPresent();
 
             ret.add(
                     UserProfileDto.builder()
+                            .userId(currentUserId)
                             .nickname(nickname)
                             .bio(bio)
                             .score(score)
