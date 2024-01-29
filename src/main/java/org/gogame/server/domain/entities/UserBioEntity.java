@@ -20,6 +20,7 @@ public class UserBioEntity {
     @Id
     private Long userId;
 
+    @Builder.Default
     @Column(length = 2048)
-    private String bio;
+    private String bio = "";
 }
