@@ -1,9 +1,6 @@
 package org.gogame.server.service;
 
 import lombok.RequiredArgsConstructor;
-import org.gogame.server.domain.entities.LeaderboardEntity;
-import org.gogame.server.domain.entities.UserBioEntity;
-import org.gogame.server.domain.entities.UserEntity;
 import org.gogame.server.domain.entities.dto.user.UserProfileDto;
 import org.gogame.server.repositories.*;
 import org.springframework.stereotype.Service;
