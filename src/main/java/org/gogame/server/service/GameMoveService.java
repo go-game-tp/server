@@ -2,7 +2,6 @@ package org.gogame.server.service;
 
 import lombok.RequiredArgsConstructor;
 import org.gogame.server.domain.entities.GameEntity;
-import org.gogame.server.domain.entities.GameJournalEntity;
 import org.gogame.server.domain.entities.dto.game.GameJournalDto;
 import org.gogame.server.domain.entities.enums.GameAction;
 import org.gogame.server.domain.entities.enums.GameState;

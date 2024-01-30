@@ -3,7 +3,6 @@ package org.gogame.server.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.gogame.server.domain.entities.enums.GameState;
-import org.hibernate.annotations.ColumnDefault;
 
 @Data
 @AllArgsConstructor
