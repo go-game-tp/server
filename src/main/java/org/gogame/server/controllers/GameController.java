@@ -60,7 +60,7 @@ public class GameController {
         }
 
         if (!gameMoveService.isOpponentMove(stoneType, request)) {
-            return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
         GameAction requestAction = request.getAction();
